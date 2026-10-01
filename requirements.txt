@@ -1,0 +1,3 @@
+# CarbonCut runtime dependencies (offline-friendly, no API keys needed)
+matplotlib>=3.6
+numpy>=1.24
