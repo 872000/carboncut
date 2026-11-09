@@ -62,6 +62,13 @@ def test_unknown_detail_raises_helpful_error(factors):
         factor_for(factors, "diet", "pizza_inferno")
 
 
+def test_unknown_category_names_valid_categories(factors):
+    with pytest.raises(KeyError, match="unknown category 'space'"):
+        factor_for(factors, "space", "rocket")
+    with pytest.raises(KeyError, match="valid categories: diet, energy, transport"):
+        factor_for(factors, "space", "rocket")
+
+
 def test_summarize_groups_correctly(tmp_path, factors):
     conn = db.connect(str(tmp_path / "t.db"))
     db.log_activity(conn, user="me", date="2026-09-01",

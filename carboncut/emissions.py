@@ -21,8 +21,15 @@ def load_factors(path: str | None = None) -> dict:
 def factor_for(factors: dict, category: str, detail: str) -> float:
     """Return the kgCO2e factor for one activity type.
 
-    Raises KeyError with a helpful message listing valid details.
+    Raises KeyError with a helpful message listing valid categories
+    (unknown category) or valid details (unknown detail).
     """
+    if category not in factors or "factors" not in factors[category]:
+        valid = sorted(k for k in factors if not k.startswith("_"))
+        raise KeyError(
+            f"unknown category {category!r}; "
+            f"valid categories: {', '.join(valid) or '(none)'}"
+        )
     try:
         entry = factors[category]["factors"][detail]
     except KeyError:
